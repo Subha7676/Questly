@@ -2,135 +2,173 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Daily Quest Generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Questly - Daily Life Quests</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
-
     body {
       margin: 0;
-      height: 100vh;
-      font-family: 'Poppins', sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
-      background-size: cover;
-      overflow: hidden;
-    }
-
-    /* Overlay with blur and a circular border */
-    .overlay {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 420px;
-      height: 320px;
-      background: rgba(255, 255, 255, 0.15);
-      border-radius: 30px;
-      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-backdrop-filter: blur(15px);
-      -webkit-backdrop-filter: blur(15px);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      transform: translate(-50%, -50%);
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: white;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
-      padding: 30px 40px;
-      color: #fff;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
       text-align: center;
-      z-index: 10;
     }
 
-    #questBox {
-      font-size: 1.3rem;
-      min-height: 110px;
-      margin-bottom: 25px;
-      line-height: 1.4;
-      user-select: none;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      text-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
+
+    .quest-box {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      max-width: 500px;
+      width: 90%;
+      font-size: 1.3em;
+      margin: 20px 0;
+      transition: all 0.3s ease;
     }
 
     button {
-      background: linear-gradient(135deg, #ff6f91, #ff927a);
-      border: none;
-      padding: 15px 55px;
-      font-size: 1.1rem;
-      font-weight: 700;
+      background: #00c6ff;
       color: white;
-      border-radius: 35px;
+      border: none;
+      padding: 12px 25px;
+      font-size: 1em;
+border-radius: 8px;
       cursor: pointer;
-      box-shadow: 0 6px 12px rgba(255,111,145,0.6);
-      transition: background 0.3s ease, box-shadow 0.3s ease;
-      user-select: none;
+      transition: background 0.3s;
     }
 
     button:hover {
-      background: linear-gradient(135deg, #ff4b75, #ff6c58);
-      box-shadow: 0 10px 20px rgba(255,75,117,0.8);
+      background: #0072ff;
     }
 
-    @media (max-width: 480px) {
-      .overlay {
-        width: 90vw;
-        height: auto;
-        padding: 25px 20px;
-      }
-      #questBox {
-font-size: 1.1rem;
-      }
-      button {
-        width: 100%;
-        padding: 15px 0;
-      }
+    .bg-circle {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 50%;
+      animation: float 8s ease-in-out infinite;
+      z-index: -1;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-30px); }
+    }
+
+    footer {
+      position: absolute;
+      bottom: 10px;
+      font-size: 0.8em;
+      color: #aaa;
     }
   </style>
 </head>
 <body>
+  <div class="bg-circle"></div>
 
-  <div class="overlay">
-    <div id="questBox">Click the button to get your daily quest!</div>
-    <button onclick="generateQuest()">Get Quest</button>
+  <h1>Questly</h1>
+  <p>Your Daily Life Quest Awaits</p>
+
+  <div class="quest-box" id="questBox">
+    Click below to receive a new quest!
   </div>
 
+  <button onclick="generateQuest()">Generate Quest</button>
+
+  <footer>© 2025 Questly by You</footer>
+
   <script>
-    const actions = [
-      "Drink", "Take", "Give", "Write", "Call", "Organize", "Plan", "Read", "Try", "Compliment",
-      "Help", "Meditate for", "Smile for", "Avoid", "Exercise for", "Learn", "Cook", "Clean", "Watch", "Listen to"
-    ];
-
-    const objects = [
-      "8 glasses of water", "a 15-minute walk", "a sincere compliment", "a journal entry",
-      "an old friend", "your workspace", "your meals", "a new recipe", "a motivational video",
-      "a breathing exercise", "your favorite song", "social media", "your emails",
-      "a new language phrase", "a healthy snack", "a relaxing yoga session",
-      "a charity", "a podcast episode", "a hobby", "a positive affirmation"
-    ];
-
-    const timesOrPlaces = [
-      "today", "right now", "this evening", "before bedtime", "during your break",
-      "in the morning", "this weekend", "at lunch", "before dinner", "in nature",
-      "with a friend", "at work", "at home", "while commuting", "in your free time",
-"without distractions", "with full focus", "with gratitude", "mindfully", "with a smile"
+    const quests = [
+      "Drink 2L of water today 💧",
+      "Compliment a stranger 🙂",
+      "Clean one messy corner of your room 🧹",
+      "Do 10 push-ups 💪",
+      "Read for 15 minutes 📚",
+      "Go for a 20-minute walk 🚶",
+      "Uninstall an app you don't use 📱",
+      "Write 3 things you're grateful for 🙏",
+      "Meditate for 5 minutes 🧘",
+"Help someone without expecting anything back 🤝",
+      "Stretch for 10 minutes 🧎",
+      "Organize your desktop or phone 🔍",
+      "Avoid social media for 1 hour 🚫📱",
+      "Wake up 30 minutes earlier tomorrow ⏰",
+      "Eat one healthy snack today 🥗",
+      "Smile at yourself in the mirror 😄",
+      "Spend 10 minutes outside 🌳",
+      "Write down a goal for the week 📝",
+      "Call a family member 👨‍👩‍👧",
+      "Do nothing for 5 minutes 😌"
+       Drink 2L of water today 💧",
+  "Compliment a stranger 🙂",
+  "Clean one messy corner of your room 🧹",
+  "Do 10 push-ups 💪",
+  "Read for 15 minutes 📚",
+  "Go for a 20-minute walk 🚶",
+  "Uninstall an app you don't use 📱",
+  "Write 3 things you're grateful for 🙏",
+  "Meditate for 5 minutes 🧘",
+  "Help someone without expecting anything back 🤝",
+  "Stretch for 10 minutes 🧎",
+  "Organize your desktop or phone 🔍",
+  "Avoid social media for 1 hour 🚫📱",
+  "Wake up 30 minutes earlier tomorrow ⏰",
+  "Eat one healthy snack today 🥗",
+  "Smile at yourself in the mirror 😄",
+  "Spend 10 minutes outside 🌳",
+  "Write down a goal for the week 📝",
+  "Call a family member 👨‍👩‍👧",
+  "Do nothing for 5 minutes 😌",
+  "Try a new food today 🍲",
+  "Say thank you to someone meaningful 🙌",
+  "Fix one small thing you’ve been ignoring 🔧",
+  "Listen to your favorite song 🎵",
+  "Do 15 squats 🏋️",
+  "Look at the sky for 2 minutes 🌤️",
+  "Practice deep breathing for 2 minutes 🌬️",
+  "Organize one folder on your computer 💻",
+  "Limit screen time for 1 hour ⏳",
+  "Write down your dreams after waking up 🌙",
+  "Donate something you don’t need 🎁",
+  "Send a kind message to a friend 💬",
+  "Make your bed properly 🛏️",
+  "Water a plant 🌱",
+  "Do 20 jumping jacks 🏃",
+  "Turn off notifications for 1 hour 🔕",
+  "Visualize your goals for 5 minutes 🧠",
+  "Write a mini journal entry 📝",
+  "Say no to junk food for the day 🍔❌",
+  "Do a random act of kindness ❤️",
+  "Watch a motivational video 🎬",
+  "Clean your shoes 👟",
+  "Plan tomorrow’s outfit 👕",
+  "Limit sugar for the day 🍭❌",
+  "Write a letter to your future self ✉️",
+  "Listen to nature sounds 🌲🎶",
+  "Fold your clothes properly 👚",
+  "Smile at 3 people today 😁",
+  "Delete 10 unnecessary photos 🖼️",
+  "Tidy up your study/work table 🧽",
+  "Fix a small broken thing in your room 🛠️",
+  "Eat a fruit instead of a snack 🍎"
     ];
 
     function generateQuest() {
-      const action = actions[Math.floor(Math.random() * actions.length)];
-      const object = objects[Math.floor(Math.random() * objects.length)];
-      const timePlace = timesOrPlaces[Math.floor(Math.random() * timesOrPlaces.length)];
-
-      let quest = `action{object} timePlace.`;
-
-      if (action === "Meditate for" || action === "Exercise for") 
-        quest = `{action} 10 minutes ${timePlace}.`;
-      }
-
-      document.getElementById('questBox').textContent = quest;
+      const box = document.getElementById("questBox");
+      const randomIndex = Math.floor(Math.random() * quests.length);
+      box.textContent = quests[randomIndex];
     }
   </script>
-
 </body>
 </html>

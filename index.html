@@ -69,16 +69,42 @@ const quests = [
       "🎯 Set 1 goal for tomorrow.",
       "🚿 Take a long relaxing shower.",
       "🤗 Give someone a hug."
-    ];
-
-    function generateQuest() {
-      const randomIndex = Math.floor(Math.random() * quests.length);
-      const selectedQuest = quests[randomIndex];
-      document.getElementById("quest").innerText = selectedQuest;
-    }
-  </script>
-</body>
-</html>  "Turn off notifications for 1 hour 🔕",
+        "Drink 2L of water today 💧",
+  "Compliment a stranger 🙂",
+  "Clean one messy corner of your room 🧹",
+  "Do 10 push-ups 💪",
+  "Read for 15 minutes 📚",
+  "Go for a 20-minute walk 🚶",
+  "Uninstall an app you don't use 📱",
+  "Write 3 things you're grateful for 🙏",
+  "Meditate for 5 minutes 🧘",
+  "Help someone without expecting anything back 🤝",
+  "Stretch for 10 minutes 🧎",
+  "Organize your desktop or phone 🔍",
+  "Avoid social media for 1 hour 🚫📱",
+  "Wake up 30 minutes earlier tomorrow ⏰",
+  "Eat one healthy snack today 🥗",
+  "Smile at yourself in the mirror 😄",
+  "Spend 10 minutes outside 🌳",
+  "Write down a goal for the week 📝",
+  "Call a family member 👨‍👩‍👧",
+  "Do nothing for 5 minutes 😌",
+  "Try a new food today 🍲",
+  "Say thank you to someone meaningful 🙌",
+  "Fix one small thing you’ve been ignoring 🔧",
+  "Listen to your favorite song 🎵",
+  "Do 15 squats 🏋️",
+  "Look at the sky for 2 minutes 🌤️",
+  "Practice deep breathing for 2 minutes 🌬️",
+  "Organize one folder on your computer 💻",
+  "Limit screen time for 1 hour ⏳",
+  "Write down your dreams after waking up 🌙",
+  "Donate something you don’t need 🎁",
+  "Send a kind message to a friend 💬",
+[08/10, 1:29 pm] ChatGPT: "Make your bed properly 🛏️",
+  "Water a plant 🌱",
+  "Do 20 jumping jacks 🏃",
+  "Turn off notifications for 1 hour 🔕",
   "Visualize your goals for 5 minutes 🧠",
   "Write a mini journal entry 📝",
   "Say no to junk food for the day 🍔❌",
@@ -98,9 +124,9 @@ const quests = [
     ];
 
     function generateQuest() {
-      const box = document.getElementById("questBox");
       const randomIndex = Math.floor(Math.random() * quests.length);
-      box.textContent = quests[randomIndex];
+      const selectedQuest = quests[randomIndex];
+      document.getElementById("quest").innerText = selectedQuest;
     }
   </script>
 </body>

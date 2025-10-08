@@ -1,151 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Questly - Daily Life Quests</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Questly - Daily Quest Generator</title>
   <style>
     body {
-      margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-      color: white;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      overflow: hidden;
       text-align: center;
+      padding: 50px;
+      background: linear-gradient(to right, #667eea, #764ba2);
+      color: #fff;
+      min-height: 100vh;
     }
-
     h1 {
-      font-size: 2.5em;
-      margin-bottom: 10px;
+      font-size: 3em;
+      margin-bottom: 20px;
     }
-
-    .quest-box {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-      max-width: 500px;
-      width: 90%;
-      font-size: 1.3em;
-      margin: 20px 0;
-      transition: all 0.3s ease;
-    }
-
     button {
-      background: #00c6ff;
-      color: white;
-      border: none;
       padding: 12px 25px;
       font-size: 1em;
-border-radius: 8px;
+      border: none;
+      background: #fff;
+      color: #764ba2;
+      border-radius: 8px;
       cursor: pointer;
       transition: background 0.3s;
     }
-
     button:hover {
-      background: #0072ff;
+      background: #ddd;
     }
-
-    .bg-circle {
-      position: absolute;
-      width: 400px;
-      height: 400px;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 50%;
-      animation: float 8s ease-in-out infinite;
-      z-index: -1;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-30px); }
-    }
-
-    footer {
-      position: absolute;
-      bottom: 10px;
-      font-size: 0.8em;
-      color: #aaa;
+    #quest {
+      margin-top: 30px;
+      font-size: 1.5em;
+      padding: 20px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
     }
   </style>
 </head>
 <body>
-  <div class="bg-circle"></div>
 
-  <h1>Questly</h1>
-  <p>Your Daily Life Quest Awaits</p>
-
-  <div class="quest-box" id="questBox">
-    Click below to receive a new quest!
-  </div>
-
+  <h1>🎯 Questly</h1>
+  <p>Click below to get your daily quest!</p>
   <button onclick="generateQuest()">Generate Quest</button>
 
-  <footer>© 2025 Questly by You</footer>
+  <div id="quest">Your quest will appear here...</div>
 
   <script>
-    const quests = [
-      "Drink 2L of water today 💧",
-      "Compliment a stranger 🙂",
-      "Clean one messy corner of your room 🧹",
-      "Do 10 push-ups 💪",
-      "Read for 15 minutes 📚",
-      "Go for a 20-minute walk 🚶",
-      "Uninstall an app you don't use 📱",
-      "Write 3 things you're grateful for 🙏",
-      "Meditate for 5 minutes 🧘",
-"Help someone without expecting anything back 🤝",
-      "Stretch for 10 minutes 🧎",
-      "Organize your desktop or phone 🔍",
-      "Avoid social media for 1 hour 🚫📱",
-      "Wake up 30 minutes earlier tomorrow ⏰",
-      "Eat one healthy snack today 🥗",
-      "Smile at yourself in the mirror 😄",
-      "Spend 10 minutes outside 🌳",
-      "Write down a goal for the week 📝",
-      "Call a family member 👨‍👩‍👧",
-      "Do nothing for 5 minutes 😌"
-       Drink 2L of water today 💧",
-  "Compliment a stranger 🙂",
-  "Clean one messy corner of your room 🧹",
-  "Do 10 push-ups 💪",
-  "Read for 15 minutes 📚",
-  "Go for a 20-minute walk 🚶",
-  "Uninstall an app you don't use 📱",
-  "Write 3 things you're grateful for 🙏",
-  "Meditate for 5 minutes 🧘",
-  "Help someone without expecting anything back 🤝",
-  "Stretch for 10 minutes 🧎",
-  "Organize your desktop or phone 🔍",
-  "Avoid social media for 1 hour 🚫📱",
-  "Wake up 30 minutes earlier tomorrow ⏰",
-  "Eat one healthy snack today 🥗",
-  "Smile at yourself in the mirror 😄",
-  "Spend 10 minutes outside 🌳",
-  "Write down a goal for the week 📝",
-  "Call a family member 👨‍👩‍👧",
-  "Do nothing for 5 minutes 😌",
-  "Try a new food today 🍲",
-  "Say thank you to someone meaningful 🙌",
-  "Fix one small thing you’ve been ignoring 🔧",
-  "Listen to your favorite song 🎵",
-  "Do 15 squats 🏋️",
-  "Look at the sky for 2 minutes 🌤️",
-  "Practice deep breathing for 2 minutes 🌬️",
-  "Organize one folder on your computer 💻",
-  "Limit screen time for 1 hour ⏳",
-  "Write down your dreams after waking up 🌙",
-  "Donate something you don’t need 🎁",
-  "Send a kind message to a friend 💬",
-  "Make your bed properly 🛏️",
-  "Water a plant 🌱",
-  "Do 20 jumping jacks 🏃",
-  "Turn off notifications for 1 hour 🔕",
+const quests = [
+      "🚶 Take a 10-minute walk.",
+      "📚 Read 5 pages of a book.",
+      "💧 Drink 2 glasses of water.",
+      "🧹 Clean your room.",
+      "📴 Stay offline for 1 hour.",
+      "✍️ Write something you're grateful for.",
+      "🎧 Listen to your favorite song.",
+      "🍎 Eat one healthy snack.",
+      "💤 Go to bed 30 minutes early.",
+      "🧘‍♀️ Do 5 minutes of meditation.",
+      "📸 Take a photo of something that makes you smile.",
+      "📦 Declutter one small area.",
+      "📞 Call or message a friend.",
+      "😊 Compliment someone.",
+      "📓 Write your thoughts in a journal.",
+      "🎨 Do something creative for 10 mins.",
+      "🌿 Sit outside and relax.",
+      "🎯 Set 1 goal for tomorrow.",
+      "🚿 Take a long relaxing shower.",
+      "🤗 Give someone a hug."
+    ];
+
+    function generateQuest() {
+      const randomIndex = Math.floor(Math.random() * quests.length);
+      const selectedQuest = quests[randomIndex];
+      document.getElementById("quest").innerText = selectedQuest;
+    }
+  </script>
+</body>
+</html>  "Turn off notifications for 1 hour 🔕",
   "Visualize your goals for 5 minutes 🧠",
   "Write a mini journal entry 📝",
   "Say no to junk food for the day 🍔❌",

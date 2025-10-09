@@ -2,173 +2,272 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Questly - Daily Life Quests</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>QuestVibe</title>
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #74ebd5, #acb6e5);
-      color: #333;
-      text-align: center;
-      padding: 50px;
       margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+      background: #111;
+      color: #fff;
     }
+
+    .background {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: url('https://images.unsplash.com/photo-1508780709619-79562169bc64?auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+      animation: scrollBg 30s linear infinite;
+      z-index: -1;
+      filter: brightness(0.4);
+    }
+
+    @keyframes scrollBg {
+      0% { background-position: 0 0; }
+      100% { background-position: 0 -1000px; }
+    }
+
+    .container {
+      text-align: center;
+      padding: 100px 20px;
+    }
+
     h1 {
       font-size: 3em;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
+      color: #00ffff;
     }
+
     #quest {
-      font-size: 1.5em;
-      margin: 30px 0;
+      font-size: 1.6em;
+margin: 30px auto;
+      max-width: 600px;
+      background: rgba(255, 255, 255, 0.1);
       padding: 20px;
-      border-radius: 10px;
-      background: #fff;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      max-width: 500px;
-      margin-left: auto;
-      margin-right: auto;
+      border-radius: 12px;
+      box-shadow: 0 0 10px #00ffff;
+      transition: transform 0.4s ease;
     }
-    button {
+
+    .btn {
+      background: #00ffff;
+      color: #111;
       padding: 15px 30px;
-      font-size: 1em;
-      background-color: #ff6f61;
-      color: white;
+      font-size: 1.2em;
       border: none;
-      border-radius: 8px;
+      border-radius: 30px;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: 0.3s;
     }
-    button:hover {
-      background-color: #ff4c3b;
+
+    .btn:hover {
+      background: #fff;
+      color: #111;
+    }
+
+    audio {
+      display: none;
     }
   </style>
 </head>
 <body>
-  <h1>🎯 Questly</h1>
-  <p>Your daily adventure starts now!</p>
-  <div id="quest">Click the button to get a quest</div>
-<button onclick="generateQuest()">✨ Generate Quest</button>
 
-  <script>
-    const quests = [
-      "💧 Drink 2L of water today",
-      "😊 Compliment someone genuinely",
-      "🚶‍♂️ Take a 10-minute walk",
-      "🧹 Clean your desk or workspace",
-      "📖 Read a book for 15 minutes",
-      "📱 Uninstall one useless app",
-      "💪 Do 10 push-ups",
-      "📞 Call a family member or friend",
-      "🙏 Write down 3 things you're grateful for",
-      "🤸 Stretch for 5 minutes",
-      "🗂️ Organize one folder on your phone",
-      "🍇 Try a new fruit or vegetable",
-      "⛔ Avoid social media for 2 hours",
-      "🛏️ Go to sleep 30 mins earlier tonight",
-      "🌅 Watch the sunset or sunrise",
-      "📝 Plan tomorrow's to-do list",
-      "🎶 Listen to a calming song",
-      "🍬 Avoid sugar today",
-      "😮‍💨 Take 3 deep breaths when stressed",
-      "🙂 Smile at a stranger",
-      "🚫 Say no to something you don’t want to do",
-      "🧽 Delete 10 unnecessary photos",
-      "🔧 Fix one small thing you’ve been ignoring",
-      "💌 Say thank you to someone who deserves it",
-      "📸 Take a photo of something beautiful",
-      "🎁 Do one random act of kindness",
-      "🧠 Learn one new word",
-      "⏳ Spend 15 minutes tech-free",
-      "🆘 Help someone without being asked",
-      "🍽️ Eat mindfully (no screens)",
-      "🎒 Organize your bag or wallet",
-      "🎯 Write down one short-term goal",
-      "🧼 Tidy up your room",
-      "🧘‍♀️ Meditate for 5 minutes",
-      "📴 Avoid using your phone in bed",
-      "📓 Journal your thoughts for 10 mins",
-      "🛏️ Make your bed neatly",
-      "🎨 Revisit an old hobby",
-      "🍵 Drink a warm cup of tea",
-      "🏃 Do 20 jumping jacks",
-      "🧍 Practice good posture for 1 hour",
-      "📝 Write an inspiring note and leave it somewhere",
-      "❤️‍🩹 Forgive someone mentally",
-      "🛍️ Support a small creator or business",
-      "🌳 Take a short nature walk",
-      "🥗 Eat one healthy homemade meal",
-      "📺 Rewatch your favorite childhood show",
-      "🙏 Say 'I appreciate you' to someone",
-      "🌠 Write down one dream or life goal",
-      "🧹 Declutter one shelf or drawer",
-      "⏱️ Set a timer and focus for 20 mins",
-      "🙊 Avoid gossip today",
-      "📚 Learn a quick fact and share it",
-      "🌬️ Try a breathing exercise",
-      "📵 Go screen-free for 1 hour",
-      "💾 Backup your important files",
-      "🔐 Update one password",
-      "😄 Make someone laugh today",
-      "🔕 Turn off notifications for 1 hour",
-      "🎧 Create a playlist of happy songs",
-      "📝 Start a gratitude list",
-      "☕ Make your favorite drink",
-      "💤 Do a digital detox for 30 minutes",
-      "🙂 Smile in the mirror for 10 seconds",
-      "🔧 Fix something broken",
-      "💦 Hydrate first thing in the morning",
-      "❤️ Say 'I love you' to someone today",
-      "🧘 Practice 3 minutes of mindfulness",
-      "💬 Read one motivational quote",
-      "📥 Declutter your email inbox",
-      "🎉 Celebrate a small win",
-      "🚫 Say no to junk food today",
-      "✅ Finish one task you’ve been avoiding",
-      "✍️ Write a short poem",
-      "🏋️ Do a 7-minute workout",
-      "📅 Plan a weekend activity",
-      "🔇 Avoid multitasking for 1 hour",
-      "🤝 Help someone online",
-      "🎨 Do something creative (draw, sing, write)",
-      "🌿 Take care of a plant or pet",
-      "🎓 Watch an educational video",
-      "💧 Drink only water for the next 4 hours",
-      "👋 Say hello to someone new",
-      "🛍️ Do something nice for yourself",
-      "💻 Say a kind word to someone online",
-      "🤣 Watch a feel-good video",
-      "🎯 Check in with your goals",
-      "🌈 Visualize your dream life for 3 mins",
-      "🍱 Try something you’ve never eaten before",
-      "🧹 Pick up one piece of litter outside",
-      "👂 Close your eyes and just listen",
-      "🚫 Avoid negative self-talk for a day",
-      "🌍 Learn how to say hello in 3 languages",
-      "💌 Write a short letter to your future self",
-      "📂 Reorganize one folder on your device",
-      "🎁 Donate something you don’t use",
-      "🪞 Compliment yourself in the mirror",
-      "👍 Support someone else’s idea",
-      "📱 Change your phone wallpaper to something calming",
-      "💬 Message an old friend",
-      "📓 Use a notebook instead of your phone",
-      "📌 Make a mini vision board",
-      "🚫 Avoid fast food today",
-      "👁️ Do eye exercises for 2 minutes",
-      "✍️ Try writing with your non-dominant hand",
-      "🤫 Do 5-minute silence with no devices",
-      "👂 Give your full attention to someone",
-      "🕯️ Light a candle and relax",
-      "🧠 Learn something new on Wikipedia",
-      "😊 Post something positive online",
-      "📩 Send someone a thank-you text",
-      "📋 Create a list of things that make you happy"
-    ];
+<div class="background"></div>
 
-    function generateQuest() {
-      const quest = quests[Math.floor(Math.random() * quests.length)];
-      document.getElementById("quest").innerText = quest;
-    }
-  </script>
+<div class="container">
+  <h1>✨ Daily QuestVibe ✨</h1>
+  <div id="quest">Click below to get your quest!</div>
+  <button class="btn" onclick="generateQuest()">Generate Quest 🎯</button>
+  <audio id="sound" src="https://www.myinstants.com/media/sounds/mario-coin.mp3" preload="auto"></audio>
+</div>
+
+<script>
+  const quests = [
+  "Take a 10-minute walk 🚶‍♂️",
+  "Drink 2 liters of water 💧",
+  "Compliment someone today 😊",
+  "Organize your desk 🧹",
+  "Call a friend 📞",
+  "Meditate for 5 minutes 🧘",
+  "Write down 3 goals 📝",
+  "Read a chapter of a book 📖",
+  "Do 10 push-ups 💪",
+  "Limit screen time 📵",
+  "Stretch your body 🤸",
+  "Smile at a stranger 😀",
+  "Practice deep breathing 🌬️",
+  "Cook something healthy 🥗",
+  "Clean one corner of your room 🧽",
+  "Sleep 8 hours tonight 🛌",
+  "Avoid junk food for today 🚫🍟",
+  "Say no when needed 🙅",
+  "Listen to music 🎧",
+  "Support someone emotionally ❤️",
+  "Write in a journal 📓",
+  "Delete 5 unused apps 🗑️",
+  "Plan tomorrow's tasks 🗒️",
+  "Avoid sugar for a day 🍬❌",
+  "Water your plants 🌱",
+  "Unfollow 3 negative accounts 🙅‍♂️",
+  "Set a new weekly goal 🎯",
+  "Watch a motivational video 📺",
+  "Try a new hobby 🎨",
+  "Take 3 deep breaths right now 😌",
+  "Organize your photos 📷",
+  "Read a quote aloud 🗣️",
+  "Fix your sleep schedule ⏰",
+  "Limit social media to 1hr 📵",
+  "Send a positive message to someone 💌",
+  "Do 20 jumping jacks 🤾",
+  "Make your bed neatly 🛏️",
+  "Write 3 things you’re grateful for 🙏",
+  "Watch the sunrise or sunset 🌅",
+  "Practice positive affirmations 💬",
+  "Do a random act of kindness 🌟",
+  "Sort old files or papers 📁",
+  "Plan a fun weekend activity 🏖️",
+  "Cook a meal without using your phone 📵🍳",
+  "Walk barefoot in the grass 🌿",
+  "Draw or doodle something 🎨",
+  "Take a cold shower 🚿❄️",
+  "Turn off your phone for 1 hour ⛔📱",
+  "Dance to your favorite song 💃",
+  "Practice gratitude for 3 minutes 🙌",
+  "Talk to a family member 👨‍👩‍👧‍👦",
+  "Organize your email inbox 📬",
+  "Drink water before every meal 💧🍽️",
+  "Step outside for fresh air 🌳",
+  "Watch an inspiring TED Talk 🎥",
+  "Write a thank you note 📝",
+  "Declutter your bag 🎒",
+  "Avoid negative thoughts for 1 hour 🧠🚫",
+  "Take a new route while walking 🚶‍♀️",
+  "Say something nice to yourself 💖",
+  "Try 5 minutes of yoga 🧘‍♂️",
+  "Look at old happy memories 📸",
+  "Smile for no reason 🙂",
+  "Plan a short-term goal 🛤️",
+  "Send a voice message instead of text 🎙️",
+  "Organize your to-do list 🗂️",
+  "Read a few pages from a self-help book 📚",
+  "Fix something that’s been bothering you 🔧",
+  "Skip snoozing your alarm tomorrow ⏰✅",
+  "Stand in the sunlight for 5 minutes ☀️",
+  "Learn 1 new thing today 🌍",
+  "Clean your phone screen 📱🧼",
+  "Prepare a healthy snack 🥝",
+  "Give someone a genuine compliment 👏",
+  "Schedule a no-stress hour 🧘‍♀️",
+  "Reflect on your achievements 🏆",
+  "Donate an item you don’t use ♻️",
+  "Sit quietly for 5 minutes 🙇",
+  "Plan a fun future trip 🧳",
+  "Reduce your sugar intake for today ❌🍫",
+  "Tidy up your room 🛋️",
+  "Try a new type of tea 🍵",
+  "Laugh at a funny video 😂",
+  "Stretch for 3 minutes after waking up 🧎",
+  "Say something positive aloud 🎤",
+  "Avoid gossip today 🚫🗣️",
+  "Drink lemon water in the morning 🍋💧",
+  "Send good morning message to 3 people ☀️📲",
+  "Write a letter to your future self ✉️",
+  "Celebrate a small win today 🎉",
+  "Make a vision board 📌",
+  "Donate digital storage (delete) 💻🗑️",
+  "Record a voice journal entry 🎙️📔",
+  "Compliment yourself in the mirror 🪞",
+  "Try one new productive app 📱⚙️",
+  "Unsubscribe from spam emails 🗑️",
+  "Watch a documentary 🧠",
+  "Fix your posture now! 🪑✅",
+  "Write down your dream 🛌💭",
+  "Help someone with no expectation 🫂",
+  "Try a new food 🌮",
+  "Learn 1 word in a new language 🈳",
+  "Spend time offline for 30 min 📵",
+  "Take a nap without guilt 💤",
+  "Talk less, listen more 👂",
+  "Clean one drawer 🧰",
+  "Set your phone to Do Not Disturb 📴",
+  "Put a positive note on your wall 🗒️❤️",
+  "Take care of your nails 💅",
+  "Try slow breathing (5 in, 5 out) 🌬️",
+  "Stand like a superhero for 2 mins 🦸",
+  "Be mindful while eating 🍽️🧠",
+  "Organize your apps 📲",
+  "Make someone laugh 😂",
+  "Light a candle and relax 🕯️",
+  "Sketch something with a pencil ✏️",
+  "Revisit a happy memory 💭😊",
+  "Say 5 things you love about yourself ❤️",
+  "Give yourself a break 😌",
+  "Start a tiny new habit 🔁",
+  "Write down 1 problem, then solve it 💡",
+  "Help someone anonymously 🎁",
+  "Take 3 photos of things that make you smile 📸😃",
+  "Try 10 minutes without multitasking ⏱️",
+  "Declutter your desktop 🧾🖥️",
+  "Go to bed 30 mins earlier tonight 🌙",
+  "Take 1 minute to feel grateful 🙏",
+  "Make your own to-do list style 🗂️🖊️",
+  "Write your current mood in one word 😌",
+  "Replace 1 bad habit with a good one 🔄",
+  "Say thank you to someone today 🙏",
+  "Make a list of 3 strengths you have 💪",
+  "Let go of one past regret 🕊️",
+  "Remind yourself that you're enough 💗",
+  "Take a mindful breath before reacting 🌫️",
+  "Watch nature for 3 minutes 🦋",
+  "Visualize your dream for 2 mins 🌠",
+  "Smile while walking 🏃‍♂️🙂",
+  "Listen to relaxing nature sounds 🌊",
+  "Say yes to something new ✅",
+  "Be kind to someone struggling 🤝",
+  "Be kind to yourself 💞",
+  "Celebrate your uniqueness 🎈",
+  "Breathe, relax, and let go 🌬️",
+  "Appreciate something small 🔍",
+  "Pause. Reflect. Recenter ⏸️",
+  "Trust your journey 🚶‍♀️🌄",
+  "Remind yourself you're doing great 🌟",
+  "Create a mantra 🔁",
+  "Start with one positive step 🔼",
+  "Be fully present for 5 mins 🧘",
+  "Encourage someone else today 💬",
+  "Reward yourself with rest ☁️",
+  "Say 'I can' 5 times aloud 💥",
+  "Take responsibility for your mood ⚖️",
+  "Let your heart lead 💓",
+  "Visualize your best self 🧠🌟",
+  "Take nothing personally today 🚫😠",
+  "Breathe into peace 🌌",
+  "Choose progress, not perfection 🔧",
+  "Just begin – now 🕰️",
+  "Make someone’s day 🌈",
+  "Do your best – then let go 🍃",
+  "You're worthy of joy 🎉",
+  "Smile... even now 🙂",
+  "You’ve got this 💪🔥"
+];
+// Add 180+ more below
+    ...Array.from({length: 180}, (_, i) => `Complete mini task #${i + 21} ✅`)
+  ];
+
+  function generateQuest() {
+    const questText = document.getElementById("quest");
+    const sound = document.getElementById("sound");
+    const randomQuest = quests[Math.floor(Math.random() * quests.length)];
+
+    questText.style.transform = "rotateX(90deg)";
+    setTimeout(() => {
+      questText.innerText = randomQuest;
+      questText.style.transform = "rotateX(0deg)";
+      sound.play();
+    }, 300);
+  }
+</script>
+
 </body>
 </html>
